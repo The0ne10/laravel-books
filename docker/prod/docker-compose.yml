@@ -80,12 +80,12 @@ services:
             POSTGRES_DB: ${DB_DATABASE}
             POSTGRES_USER: ${DB_USER}
             POSTGRES_PASSWORD: ${DB_PASSWORD}
-            PGDATA: "/var/lib/postgresql/data/pgdata_grena"
+            PGDATA: "/var/lib/postgresql/data/pgdata_db"
         volumes:
             - ./data/postgres:/var/lib/postgresql/data
             - ./logs/postgres:/var/log/postgresql/
         ports:
-            - "5433:5432"
+            - "5432:5432"
         restart: unless-stopped
         expose:
             - "5432"
