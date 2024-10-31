@@ -1,6 +1,9 @@
 #-----------------------------------------------------------
 # Variables
 #-----------------------------------------------------------
+composer = docker exec -u www-data -it $(PROJECT_PREFIX)_php composer
+php = docker exec -u www-data -it $(PROJECT_PREFIX)_php
+
 -include .env
 export USER_ID=$(shell id -u)
 export GROUP_ID=$(shell id -g)
@@ -31,6 +34,11 @@ build:
 #-----------------------------------------------------------
 
 init: build up laravel-env laravel-composer-install laravel-key laravel-migrate
+
+install-pest:
+	${composer} remove phpunit/phpunit \
+    ; ${composer} require pestphp/pest --dev --with-all-dependencies \
+    ; ${php} ./vendor/bin/pest --init
 
 init_env:
 	test -e "./.env" || { cp ./.env.example ./.env; };
